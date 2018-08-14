@@ -14,3 +14,70 @@
 14:11:54.956882 version@stat F·[1] S·564B[564B] Sc·[0.25]
 14:11:54.961898 db@janitor F·3 G·0
 14:11:54.961898 db@open done T·100.7343ms
+=============== Aug 14, 2018 (EDT) ===============
+14:12:56.434781 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:12:56.434781 version@stat F·[1] S·564B[564B] Sc·[0.25]
+14:12:56.434781 db@open opening
+14:12:56.434781 journal@recovery F·1
+14:12:56.435778 journal@recovery recovering @3
+14:12:56.449740 memdb@flush created L0@5 N·2 S·238B "Dat..ion,v11":"Las..der,v12"
+14:12:56.451734 version@stat F·[2] S·802B[802B] Sc·[0.50]
+14:12:56.454726 db@janitor F·4 G·0
+14:12:56.454726 db@open done T·19.9458ms
+=============== Aug 14, 2018 (EDT) ===============
+14:12:56.526534 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:12:56.526534 version@stat F·[2] S·802B[802B] Sc·[0.50]
+14:12:56.526534 db@open opening
+14:12:56.526534 journal@recovery F·1
+14:12:56.528529 journal@recovery recovering @6
+14:12:56.531521 memdb@flush created L0@8 N·1 S·315B "eth..\xc0\xa0\xc9,v14":"eth..\xc0\xa0\xc9,v14"
+14:12:56.534513 version@stat F·[3] S·1KiB[1KiB] Sc·[0.75]
+14:12:56.537505 db@janitor F·5 G·0
+14:12:56.537505 db@open done T·10.9705ms
+=============== Aug 14, 2018 (EDT) ===============
+14:22:34.453441 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:22:34.453441 version@stat F·[3] S·1KiB[1KiB] Sc·[0.75]
+14:22:34.453441 db@open opening
+14:22:34.453441 journal@recovery F·1
+14:22:34.453441 journal@recovery recovering @9
+14:22:34.459423 memdb@flush created L0@11 N·2063 S·105KiB "Dat..ion,v16":"r\x00\x00..\x94\xb9v,v2074"
+14:22:34.460421 version@stat F·[4] S·106KiB[106KiB] Sc·[1.00]
+14:22:34.464411 db@janitor F·6 G·0
+14:22:34.464411 db@open done T·10.9705ms
+14:22:34.465408 table@compaction L0·4 -> L1·0 S·106KiB Q·2079
+14:22:34.473387 table@build created L1@14 N·1385 S·77KiB "Dat..ion,v16":"r\x00\x00..\x94\xb9v,v2074"
+14:22:34.473387 version@stat F·[0 1] S·77KiB[0B 77KiB] Sc·[0.00 0.00]
+=============== Aug 14, 2018 (EDT) ===============
+14:22:34.542203 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:22:34.542203 version@stat F·[0 1] S·77KiB[0B 77KiB] Sc·[0.00 0.00]
+14:22:34.542203 db@open opening
+14:22:34.542203 journal@recovery F·1
+14:22:34.590075 journal@recovery recovering @12
+14:22:34.597057 memdb@flush created L0@15 N·1 S·315B "eth..\xc0\xa0\xc9,v2080":"eth..\xc0\xa0\xc9,v2080"
+14:22:34.643955 version@stat F·[1 1] S·78KiB[315B 77KiB] Sc·[0.25 0.00]
+14:22:34.649914 db@janitor F·8 G·4
+14:22:34.649914 db@janitor removing table-2
+14:22:34.649914 db@janitor removing table-5
+14:22:34.649914 db@janitor removing table-8
+14:22:34.650913 db@janitor removing table-11
+14:22:34.650913 db@open done T·108.7099ms
+=============== Aug 14, 2018 (EDT) ===============
+14:23:02.373344 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:23:02.374342 version@stat F·[1 1] S·78KiB[315B 77KiB] Sc·[0.25 0.00]
+14:23:02.385081 db@open opening
+14:23:02.385081 journal@recovery F·1
+14:23:02.386078 journal@recovery recovering @16
+14:23:02.391092 memdb@flush created L0@18 N·2 S·239B "Dat..ion,v2082":"Las..der,v2083"
+14:23:02.391092 version@stat F·[2 1] S·78KiB[554B 77KiB] Sc·[0.50 0.00]
+14:23:02.395054 db@janitor F·5 G·0
+14:23:02.395054 db@open done T·9.9733ms
+=============== Aug 14, 2018 (EDT) ===============
+14:23:02.486518 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:23:02.487492 version@stat F·[2 1] S·78KiB[554B 77KiB] Sc·[0.50 0.00]
+14:23:02.487492 db@open opening
+14:23:02.487492 journal@recovery F·1
+14:23:02.489486 journal@recovery recovering @19
+14:23:02.494500 memdb@flush created L0@21 N·1 S·315B "eth..\xc0\xa0\xc9,v2085":"eth..\xc0\xa0\xc9,v2085"
+14:23:02.497492 version@stat F·[3 1] S·78KiB[869B 77KiB] Sc·[0.75 0.00]
+14:23:02.501455 db@janitor F·6 G·0
+14:23:02.501455 db@open done T·13.963ms
