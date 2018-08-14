@@ -45,3 +45,14 @@
 14:34:11.250740 db@janitor F·6 G·0
 14:34:11.250740 db@open done T·11.9669ms
 14:34:11.250740 table@compaction L0·4 -> L1·0 S·1KiB Q·16
+=============== Aug 14, 2018 (EDT) ===============
+14:41:43.177475 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:41:43.178458 version@stat F·[4] S·1KiB[1KiB] Sc·[1.00]
+14:41:43.178458 db@open opening
+14:41:43.178458 journal@recovery F·1
+14:41:43.178458 journal@recovery recovering @12
+14:41:43.181449 memdb@flush created L0@14 N·1 S·315B "eth..\xc0\xa0\xc9,v17":"eth..\xc0\xa0\xc9,v17"
+14:41:43.183444 version@stat F·[5] S·1KiB[1KiB] Sc·[1.25]
+14:41:43.186435 db@janitor F·7 G·0
+14:41:43.186435 db@open done T·7.9777ms
+14:41:43.186435 table@compaction L0·5 -> L1·0 S·1KiB Q·18

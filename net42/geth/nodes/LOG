@@ -62,3 +62,37 @@
 14:34:13.625392 table@compaction committed F-1 S-97KiB Ke·0 D·5907 T·18.9489ms
 14:34:13.625392 table@remove removed @13
 14:34:13.625392 table@remove removed @12
+=============== Aug 14, 2018 (EDT) ===============
+14:41:45.382601 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:41:45.382601 version@stat F·[0 1] S·999KiB[0B 999KiB] Sc·[0.00 0.01]
+14:41:45.382601 db@open opening
+14:41:45.382601 journal@recovery F·1
+14:41:45.383598 journal@recovery recovering @14
+14:41:45.411524 memdb@flush created L0@17 N·8761 S·353KiB "n:\x00..ing,v37996":"n:\xff..ong,v44056"
+14:41:45.413518 version@stat F·[1 1] S·1MiB[353KiB 999KiB] Sc·[0.25 0.01]
+14:41:45.416513 db@janitor F·4 G·0
+14:41:45.416513 db@open done T·33.9119ms
+14:41:45.447438 table@compaction L0·1 -> L1·1 S·1MiB Q·45068
+14:41:45.468354 table@build created L1@20 N·28035 S·1MiB "n:\x00..ail,v32954":"version,v1"
+14:41:45.468354 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.01]
+14:41:45.469351 table@compaction committed F-1 S-78KiB Ke·0 D·3221 T·21.9131ms
+14:41:45.469351 table@remove removed @17
+14:41:45.470348 table@remove removed @16
+=============== Aug 14, 2018 (EDT) ===============
+14:44:04.531397 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:44:04.532394 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.01]
+14:44:04.532394 db@open opening
+14:44:04.532394 journal@recovery F·1
+14:44:04.533392 journal@recovery recovering @18
+14:44:04.549349 memdb@flush created L0@21 N·2327 S·99KiB "n:\x00..ing,v46661":"n:\xff..ing,v45798"
+14:44:04.550346 version@stat F·[1 1] S·1MiB[99KiB 1MiB] Sc·[0.25 0.01]
+14:44:04.555333 db@janitor F·4 G·0
+14:44:04.555333 db@open done T·22.9391ms
+14:44:04.563311 table@compaction L0·1 -> L1·1 S·1MiB Q·47359
+14:44:04.587248 table@build created L1@24 N·29426 S·1MiB "n:\x00..ail,v32954":"version,v1"
+14:44:04.587248 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.01]
+14:44:04.588245 table@compaction committed F-1 S-32KiB Ke·0 D·936 T·23.9368ms
+14:44:04.588245 table@remove removed @21
+14:44:04.588245 table@remove removed @20
+15:01:16.498698 db@close closing
+15:01:16.503713 db@close done T·5.015ms
