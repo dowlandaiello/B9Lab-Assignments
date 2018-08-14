@@ -1,4 +1,4 @@
-pragma solidity ^0.4.22;
+pragma solidity ^"0.4.22";
 
 contract Owned {
     address public owner; // That is a state variable
