@@ -26,7 +26,7 @@ contract Faucet {
     }
 
     function killMe() public returns (bool) {
-        require(msg.sender == owner);
+        require(msg.sender == owner, "owner is not sender");
         selfdestruct(owner);
         return true;
     }
