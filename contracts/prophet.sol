@@ -17,8 +17,8 @@ contract Nostradamus {
     }
 
     function theWord() public view returns(bytes32 exact) {
-        uint blockNumber = block.number;
-        bytes32 blockHash = blockhash(block.number);
-        return keccak256(abi.encodePacked(msg.sender, blockHash, blockNumber, block.timestamp, this));
+        uint blockNumber = block.number; // Fetch current block number
+        bytes32 blockHash = blockhash(block.number); // Fetch hash of current block
+        return keccak256(abi.encodePacked(msg.sender, blockHash, blockNumber, block.timestamp, this)); // Hash prophet, hash of current block, index of current block, timestamp of current block
     }
 }
