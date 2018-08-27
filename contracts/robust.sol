@@ -21,3 +21,14 @@ contract Robust0b {
         msg.sender.transfer(address(this).balance / 2);
     }
 }
+
+contract Robus1a {
+    bool alreadyPaid;
+
+    function give() public {
+        if (!alreadyPaid) {
+            alreadyPaid = true;
+            msg.sender.transfer(address(this).balance / 2);
+        }
+    }
+}
