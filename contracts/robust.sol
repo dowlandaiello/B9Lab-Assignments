@@ -43,3 +43,7 @@ contract Robust1c {
         }
     }
 }
+
+contract Robust2a {
+    bool alreadyPaid;
+}
