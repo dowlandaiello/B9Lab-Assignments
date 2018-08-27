@@ -46,4 +46,13 @@ contract Robust1c {
 
 contract Robust2a {
     bool alreadyPaid;
+
+    function give() public {
+        if (!alreadyPaid) {
+            alreadyPaid = true;
+            if (!msg.sender.call.value(address(this).balance / 2)()) {
+                alreadyPaid = false;
+            }
+        }
+    }
 }
