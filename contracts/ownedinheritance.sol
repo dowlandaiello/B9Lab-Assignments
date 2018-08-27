@@ -22,4 +22,8 @@ contract PurseManager {
         purse = new Purse();
         if (this != purse.owner()) revert("is not owner");
     }
+
+    function unsafePay(address whom, uint value) public {
+        purse.pay(whom, value);
+    }
 }
