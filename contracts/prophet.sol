@@ -1,6 +1,6 @@
 pragma solidity 0.4.24;
 
-contract NostradamusReveal2 {
+contract NostradamusReveal4 {
     mapping (address => bool) public prophets;
 
     event LogProphecised(bytes32 indexed exact);
@@ -16,9 +16,9 @@ contract NostradamusReveal2 {
         emit LogProphecised(exact);
     }
 
-    function theWord() public view returns([]bytes32 exact) {
+    function theWord() public view returns(bytes32 exact, bytes32 exact2) {
         uint blockNumber = block.number; // Fetch current block number
         bytes32 blockHash = blockhash(block.number); // Fetch hash of current block
-        return keccak256(abi.encodePacked(msg.sender, blockHash, blockNumber, block.timestamp, this)), keccak256(abi.encodePacked(msg.sender, blockNumber, blockHash, block.timestamp, this)); // Hash byte value of address+latest block hash+latest block number+latest block timestamp
+        return (keccak256(abi.encodePacked(msg.sender, blockHash, blockNumber, block.timestamp, this)), keccak256(abi.encodePacked(msg.sender, blockNumber, blockHash, block.timestamp, this))); // Hash byte value of address+latest block hash+latest block number+latest block timestamp
     }
 }
