@@ -32,3 +32,14 @@ contract Robus1a {
         }
     }
 }
+
+contract Robust1c {
+    bool alreadyPaid;
+
+    function give() public {
+        if (!alreadyPaid) {
+            alreadyPaid = true;
+            require(msg.sender.send(address(this).balance / 2), "");
+        }
+    }
+}
