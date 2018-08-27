@@ -11,7 +11,7 @@ contract NostradamusReveal4 {
     function prophecise(bytes32 exact) public {
         uint blockNumber = block.number;
         bytes32 blockHash = blockhash(blockNumber);
-        require(keccak256(abi.encodePacked(msg.sender, blockNumber, blockHash, block.timestamp, this)) == exact);
+        require(keccak256(abi.encodePacked(msg.sender, blockNumber, blockHash, block.timestamp, this)) == exact, "");
         prophets[msg.sender] = true;
         emit LogProphecised(exact);
     }
