@@ -304,6 +304,7 @@
 13:10:51.228758 db@janitor F·4 G·0
 13:10:51.229750 db@open done T·22.487447ms
 =============== Sep 1, 2018 (EDT) ===============
+<<<<<<< HEAD
 14:51:25.423579 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
 14:51:25.424575 version@stat F·[1 1] S·323KiB[239B 323KiB] Sc·[0.25 0.00]
 14:51:25.424575 db@open opening
@@ -325,3 +326,14 @@
 16:53:52.164733 db@open done T·26.9286ms
 17:13:55.500020 db@close closing
 17:13:55.507999 db@close done T·7.979ms
+=======
+17:14:30.638249 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+17:14:30.639850 version@stat F·[1 1] S·323KiB[239B 323KiB] Sc·[0.25 0.00]
+17:14:30.639889 db@open opening
+17:14:30.639990 journal@recovery F·1
+17:14:30.647707 journal@recovery recovering @74
+17:14:30.648996 memdb@flush created L0@76 N·2 S·239B "Dat..ion,v8491":"Las..der,v8492"
+17:14:30.652587 version@stat F·[2 1] S·323KiB[478B 323KiB] Sc·[0.50 0.00]
+17:14:30.653855 db@janitor F·5 G·0
+17:14:30.653900 db@open done T·13.995201ms
+>>>>>>> 8175db07a3ac38ffd314dd7a04e51d8bfcc3b932
