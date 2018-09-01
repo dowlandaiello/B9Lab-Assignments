@@ -1,0 +1,23 @@
+{
+  "name": "b9lab-assignments",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitsukomegumi/B9Lab-Assignments.git"
+  },
+  "author": "Mitsuko Megumi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mitsukomegumi/B9Lab-Assignments/issues"
+  },
+  "homepage": "https://github.com/mitsukomegumi/B9Lab-Assignments#readme",
+  "dependencies": {
+    "connect": "^3.6.6",
+    "server-static": "^2.0.5"
+  }
+}
