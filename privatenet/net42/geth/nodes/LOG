@@ -164,3 +164,70 @@
 21:44:20.990422 table@remove removed @40
 21:44:20.991880 table@remove removed @37
 21:44:20.992580 table@remove removed @38
+=============== Sep 1, 2018 (EDT) ===============
+12:36:26.128846 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:36:26.130649 version@stat F·[0 2] S·2MiB[0B 2MiB] Sc·[0.00 0.03]
+12:36:26.130723 db@open opening
+12:36:26.136552 version@stat F·[0 2] S·2MiB[0B 2MiB] Sc·[0.00 0.03]
+12:36:26.138980 db@janitor table missing @41
+=============== Sep 1, 2018 (EDT) ===============
+12:36:26.139459 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:36:26.139663 table@recovery F·1
+12:36:26.139694 table@recovery recovering @42
+12:36:26.148312 table@recovery recovered @42 Gk·15815 Ck·0 Cb·0 S·892803 Q·170656
+12:36:26.148364 table@recovery recovered F·1 N·15815 Gk·15815 Ck·0 Q·170656
+12:36:26.149484 version@stat F·[1] S·871KiB[871KiB] Sc·[0.25]
+12:36:26.149942 db@open opening
+12:36:26.150111 journal@recovery F·1
+12:36:26.152550 journal@recovery recovering @43
+12:36:26.155394 version@stat F·[1] S·871KiB[871KiB] Sc·[0.25]
+12:36:26.156058 db@janitor F·4 G·0
+12:36:26.156099 db@open done T·6.11839ms
+13:01:31.581486 memdb@flush N·40635 S·3MiB
+13:01:31.621474 memdb@flush created L0@46 N·40635 S·1MiB "n:\x00..ing,v209087":"n:\xff..ing,v186359"
+13:01:31.621534 version@stat F·[2] S·2MiB[2MiB] Sc·[0.50]
+13:01:31.621955 memdb@flush committed F·1 T·40.16227ms
+13:01:31.636958 journal@remove removed @44
+13:01:33.749439 table@compaction L0·2 -> L1·0 S·2MiB Q·211356
+13:01:33.795481 table@build created L1@47 N·34825 S·1MiB "n:\x00..ing,v209087":"version,v1"
+13:01:33.795544 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.02]
+13:01:33.795881 table@compaction committed F-1 S-407KiB Ke·0 D·21625 T·46.389776ms
+13:01:33.795981 table@remove removed @46
+13:01:33.799553 table@remove removed @42
+13:07:01.560243 db@close closing
+13:07:01.560980 db@close done T·735.776µs
+=============== Sep 1, 2018 (EDT) ===============
+13:07:06.848105 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+13:07:06.854194 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.02]
+13:07:06.854287 db@open opening
+13:07:06.854611 journal@recovery F·1
+13:07:06.857559 journal@recovery recovering @45
+13:07:06.875008 memdb@flush created L0@48 N·6947 S·233KiB "n:\x00..ail,v218091":"n:\xff..ing,v217789"
+13:07:06.877215 version@stat F·[1 1] S·1MiB[233KiB 1MiB] Sc·[0.25 0.02]
+13:07:06.880213 db@janitor F·5 G·1
+13:07:06.880279 db@janitor removing manifest-44
+13:07:06.880525 db@open done T·26.144006ms
+13:07:06.891151 table@compaction L0·1 -> L1·1 S·1MiB Q·218268
+13:07:06.951136 table@build created L1@51 N·36729 S·1MiB "n:\x00..ing,v209087":"version,v1"
+13:07:06.951266 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.02]
+13:07:06.951627 table@compaction committed F-1 S-121KiB Ke·0 D·5043 T·60.415964ms
+13:07:06.951851 table@remove removed @48
+13:07:06.954938 table@remove removed @47
+13:08:44.529592 db@close closing
+13:08:44.530073 db@close done T·480.146µs
+=============== Sep 1, 2018 (EDT) ===============
+13:10:53.342777 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+13:10:53.349872 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.02]
+13:10:53.349914 db@open opening
+13:10:53.350016 journal@recovery F·1
+13:10:53.354599 journal@recovery recovering @49
+13:10:53.361150 memdb@flush created L0@52 N·2032 S·80KiB "n:\x00..ver,v220182":"n:\xff..ing,v218834"
+13:10:53.363855 version@stat F·[1 1] S·1MiB[80KiB 1MiB] Sc·[0.25 0.02]
+13:10:53.370357 db@janitor F·4 G·0
+13:10:53.370413 db@open done T·20.482001ms
+13:10:53.420672 table@compaction L0·1 -> L1·1 S·1MiB Q·220272
+13:10:53.519458 table@build created L1@55 N·37384 S·1MiB "n:\x00..ing,v209087":"version,v1"
+13:10:53.519552 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.02]
+13:10:53.519872 table@compaction committed F-1 S-47KiB Ke·0 D·1377 T·99.147184ms
+13:10:53.520045 table@remove removed @52
+13:10:53.521255 table@remove removed @51
