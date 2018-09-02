@@ -10,6 +10,12 @@ module.exports = {
             },
             network_id: 3,
             gas: 2900000
+        },
+        net42: {
+            host: "localhost",
+            port: 8545,
+            network_id: 42,
+            gas: 2900000
         }   
     }
 };
