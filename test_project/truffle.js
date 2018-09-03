@@ -1,3 +1,5 @@
+const Web3 = require("web3");
+
 var HDWalletProvider = require("truffle-hdwallet-provider");
 
 var mnemonic = "fragile rely lady dance mass square will idle design private glass drop";
