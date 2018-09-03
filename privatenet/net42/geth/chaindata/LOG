@@ -354,3 +354,12 @@
 =======
 >>>>>>> 8175db07a3ac38ffd314dd7a04e51d8bfcc3b932
 >>>>>>> ea4f378c901b87b895288a776cd901638ebbd647
+=============== Sep 2, 2018 (EDT) ===============
+21:29:22.220044 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:29:22.235004 CURRENT: corrupted content: "<<<<<<< HEAD\r\nMANIFEST-000081\r\n=======\r\n<<<<<<< HEAD\r\nMANIFEST-000081\r\n=======\r\nMANIFEST-000078\r\n>>>>>>> 8175db07a3ac38ffd314dd7a04e51d8bfcc3b932\r\n>>>>>>> ea4f378c901b87b895288a776cd901638ebbd647\r\n"
+=============== Sep 2, 2018 (EDT) ===============
+21:29:39.074222 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:29:39.074222 CURRENT: corrupted content: "<<<<<<< HEAD\r\nMANIFEST-000081\r\n=======\r\n<<<<<<< HEAD\r\nMANIFEST-000081\r\n=======\r\nMANIFEST-000078\r\n>>>>>>> 8175db07a3ac38ffd314dd7a04e51d8bfcc3b932\r\n>>>>>>> ea4f378c901b87b895288a776cd901638ebbd647\r\n"
+=============== Sep 2, 2018 (EDT) ===============
+21:29:42.717974 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:29:42.717974 CURRENT: corrupted content: "<<<<<<< HEAD\r\nMANIFEST-000081\r\n=======\r\n<<<<<<< HEAD\r\nMANIFEST-000081\r\n=======\r\nMANIFEST-000078\r\n>>>>>>> 8175db07a3ac38ffd314dd7a04e51d8bfcc3b932\r\n>>>>>>> ea4f378c901b87b895288a776cd901638ebbd647\r\n"
