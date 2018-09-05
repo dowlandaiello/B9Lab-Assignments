@@ -2501,12 +2501,12 @@
     "3": {
       "events": {},
       "links": {
-        "ConvertLib": "0xfb3e7b97ab90219165785650331d4c1b68827d89"
+        "ConvertLib": "0xb13a18b2b409c5098f38a802355b872f2a472b91"
       },
-      "address": "0x59416ac6b4fe31da42a16cef1aa842c3c70ec242",
-      "transactionHash": "0x8a8a45041a12cb7433e153752d0aea8bb0eb1019bf06408c4ac78db5cb31b73a"
+      "address": "0xee5dd3048a2027df9a257127c610464452a7099e",
+      "transactionHash": "0x4e4601222e69e7a61b459ee3bf75573dfbade1a4e72705c964d720bd2fcced9a"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-09-02T16:05:14.028Z"
+  "updatedAt": "2018-09-03T01:33:16.428Z"
 }
