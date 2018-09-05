@@ -90,3 +90,6 @@ var uint arg1;
 enum
 enum ahnd { Left, Right }
 exi
+eth.blockNumber
+miner.startMining(1)
+miner.start(1)
