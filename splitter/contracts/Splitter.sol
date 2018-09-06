@@ -5,13 +5,14 @@ contract Splitter {
     address[] splitAddresses;
 
     function split(address[] destinationAddresses) public payable {
-        splitAddresses = destinationAddresses;
+        splitAddresses = destinationAddresses; // Get specified addresses
 
-        sendEth();
+        sendEth(); // Send ether
     }
 
     function sendEth() internal {
-        splitAddresses[0].transfer(msg.value/2);
-        splitAddresses[1].transfer(msg.value/2);
+        for (uint x = 0; x < splitAddresses.length; x++) {
+            splitAddresses[x].transfer(msg.value/splitAddresses.length); // Send ether
+        }
     }
 }
