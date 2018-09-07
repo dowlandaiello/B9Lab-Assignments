@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mitsukomegumi/B9Lab-Assignments#readme",
   "dependencies": {
     "connect": "^3.6.6",
+    "scrypt": "^6.0.3",
     "server-static": "^2.0.5",
     "sha3": "^1.2.2",
     "truffle": "4.0.7",
