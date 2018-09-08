@@ -1,4 +1,4 @@
-pragma solidity^"0.4.24"; // Specify compiler version
+pragma solidity^"0.4.19"; // Specify compiler version
 
 // Init splitter contract
 contract Splitter {
