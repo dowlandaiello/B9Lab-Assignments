@@ -4,8 +4,8 @@ pragma solidity^"0.4.19"; // Specify compiler version
 contract Splitter {
     address[] splitAddresses;
 
-    function split(address[] destinationAddresses) public payable {
-        splitAddresses = destinationAddresses; // Get specified addresses
+    function split(address destinationAddress1, address destinationAddress2) public payable {
+        splitAddresses = [destinationAddress1, destinationAddress2]; // Get specified addresses
 
         sendEth(); // Send ether
     }
