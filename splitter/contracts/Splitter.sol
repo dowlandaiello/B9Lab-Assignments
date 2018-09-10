@@ -12,7 +12,7 @@ contract Splitter {
 
     function sendEth() internal {
         for (uint x = 0; x != splitAddresses.length; x++) {
-            splitAddresses[x].transfer(msg.value/splitAddresses.length); // Send ether
+            require(splitAddresses[x].send(msg.value/splitAddresses.length)); // Send ether
         }
     }
 }
