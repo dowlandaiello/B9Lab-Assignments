@@ -4,10 +4,9 @@ pragma solidity^0.4.24; // Specify compiler version
 contract Splitter {
     mapping (address => uint256) unspentSplits; // Store pending withdrawals
 
-    function split(address[] destinationAddresses) public payable {
-        for (uint x = 0; x != destinationAddresses.length; x++) {
-            unspentSplits[destinationAddresses[x]] = msg.value / destinationAddresses.length;
-        }
+    function split(address destinationAddresses1, address destinationAddress2) public payable {
+        unspentSplits[destinationAddresses1] = msg.value / 2;
+        unspentSplits[destinationAddress2] = msg.value / 2;
     }
 
     function withdraw() public {
