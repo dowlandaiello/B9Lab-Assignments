@@ -1,0 +1,23 @@
+{
+  "name": "vanillametacoin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mitsukomegumi/b9Lab-Assignments.git"
+  },
+  "author": "Mitsuko Megumi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mitsukomegumi/b9Lab-Assignments/issues"
+  },
+  "homepage": "https://github.com/mitsukomegumi/b9Lab-Assignments#readme",
+  "devDependencies": {
+    "create-html": "^4.1.0",
+    "truffle": "^4.1.13"
+  }
+}
