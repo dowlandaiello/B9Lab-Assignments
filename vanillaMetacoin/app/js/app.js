@@ -41,6 +41,8 @@ window.addEventListener('load', function() {
         .then(deployed => deployed.getBalance.call(window.account))
         // Notice how the conversion to a string is done at the very last moment.
         .then(balance => $("#balance").html(balance.toString(10)))
+        // We wire it when the system looks in order.
+        .then(() => $("#send").click(sendCoin))
         // Never let an error go unlogged.
         .catch(console.error);
 });
