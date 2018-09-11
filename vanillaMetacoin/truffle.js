@@ -1,10 +1,4 @@
 module.exports = {
-  entry: "./app/js/app.js",
-  output: {
-      path: __dirname + "/build/app/js",
-      filename: "app.js"
-  },
-  module: {
-      rules: []
-  }
+  // See <http://truffleframework.com/docs/advanced/configuration>
+  // to customize your Truffle configuration!
 };
