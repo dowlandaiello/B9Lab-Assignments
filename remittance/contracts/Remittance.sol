@@ -30,7 +30,7 @@ contract Remittance {
         balances[claimAddress] = 0; // Reset balance
         balanceMaturity[claimAddress] = block.number; // Rest maturity
 
-        claimAddress.transfer(balance); // Transfer to specified claim address
+        msg.sender.transfer(balance); // Transfer to specified claim address
     }
 
     function withdraw() public payable {
