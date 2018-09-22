@@ -32,6 +32,6 @@ contract Splitter {
 
         balances[msg.sender] = 0; // Set address pending split to 0
 
-        msg.sender.transfer(balances[msg.sender]); // Attempt to transfer to specified address
+        msg.sender.transfer(withdrawalValue); // Attempt to transfer to specified address
     }
 }

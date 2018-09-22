@@ -20,10 +20,17 @@ contract Remittance {
     }
 
     function claim(address claimAddress, string privatekey1, string privatekey2) public payable {
-        emit attemptedClaim(msg.sender, claimAddress, publicKeys[claimAddress], balances[claimAddress]); // Send claim event
+        uint balance = balances[claimAddress];
+
+        emit attemptedClaim(msg.sender, claimAddress, publicKeys[claimAddress], balance); // Send claim event
 
         require(keccak256(abi.encodePacked(privatekey1, privatekey2)) == publicKeys[claimAddress], "Invalid private keys."); // Check for matching privatekeys
         require(msg.sender != claimAddress, "Cannot claim own balance (request a withdrawal instead)."); // Check that claimant isn't issuer
+
+        balances[claimAddress] = 0; // Reset balance
+        balanceMaturity[claimAddress] = block.number; // Rest maturity
+
+        msg.sender.transfer(balance); // Transfer to specified claim address
     }
 
     function withdraw() public payable {
