@@ -20,7 +20,7 @@ contract Remittance {
     }
 
     function claim(address claimAddress, string privatekey1, string privatekey2) public payable {
-        uint balance = balances[claimAddress];
+        uint balance = balances[claimAddress]; // Store balance
 
         emit attemptedClaim(msg.sender, claimAddress, publicKeys[claimAddress], balance); // Send claim event
 
@@ -30,12 +30,19 @@ contract Remittance {
         balances[claimAddress] = 0; // Reset balance
         balanceMaturity[claimAddress] = block.number; // Rest maturity
 
-        msg.sender.transfer(balance); // Transfer to specified claim address
+        claimAddress.transfer(balance); // Transfer to specified claim address
     }
 
     function withdraw() public payable {
+        uint balance = balances[msg.sender]; // Store balance
+
         emit attemptedWithdrawal(msg.sender, balanceMaturity[msg.sender], balances[msg.sender]); // Send withdrawal event
 
         require((block.number - balanceMaturity[msg.sender]) > 60, "Balance is not yet eligible for withdrawal."); // Check balance is mature enough for a withdrawal
+
+        balances[msg.sender] = 0; // Rest balance
+        balanceMaturity[msg.sender] = block.number; // Reset maturity
+
+        msg.sender.transfer(balance); // Transfer ether
     }
 }
