@@ -19,7 +19,7 @@ contract Remittance {
         emit deposited(msg.sender, publicKeys[msg.sender], msg.value); // Send deposit event
     }
 
-    function claim(address claimAddress, string privatekey1, string privatekey2) public payable {
+    function claim(address claimAddress, string privatekey1, string privatekey2) public {
         uint balance = balances[claimAddress]; // Store balance
 
         emit attemptedClaim(msg.sender, claimAddress, publicKeys[claimAddress], balance); // Send claim event
@@ -33,7 +33,7 @@ contract Remittance {
         msg.sender.transfer(balance); // Transfer to specified claim address
     }
 
-    function withdraw() public payable {
+    function withdraw() public {
         uint balance = balances[msg.sender]; // Store balance
 
         emit attemptedWithdrawal(msg.sender, balanceMaturity[msg.sender], balances[msg.sender]); // Send withdrawal event
