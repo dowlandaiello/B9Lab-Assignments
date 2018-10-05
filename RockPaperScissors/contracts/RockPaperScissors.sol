@@ -1,13 +1,18 @@
 pragma solidity ^0.4.24; // Specify compiler version
 
+import "./SafeMath.sol";
+
 contract RockPaperScissors {
+    using SafeMath for uint256;
+
     struct Game {
         address[] Players; // Players in game
         bytes32 InviteCode; // Game invitecode
         bool GameFinished; // Game finished
         uint Block; // Origin block
         uint RoundsPlayed; // Rounds played
-        mapping(address => uint) Bet; // Bets
+        mapping(address => uint) Bets; // Bets
+        mapping(address => uint[]) Moves; // Moves
     }
 
     event NewGame (
@@ -32,9 +37,11 @@ contract RockPaperScissors {
         return game.InviteCode; // Return invite code
     }
 
-    function bet(bytes32 _inviteCode) public {
+    function bet(bytes32 _inviteCode) public payable {
         require(Games[_inviteCode].RoundsPlayed == 0, "Game already started."); // Check game hasn't already started
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
+
+        Games[_inviteCode].Bets[msg.sender] += msg.value; // Add bet
     }
 
     function isIn(address value, address[] _array) pure internal returns (bool _isIn) {
