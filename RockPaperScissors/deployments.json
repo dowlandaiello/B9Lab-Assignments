@@ -1,5 +1,12 @@
 {
-    "depOne": {
-        "address": "0xece6793a746852724d2e48de93696b60d096eb96"
+    "RockPaperScissors": {
+        "depOne": {
+            "address": "0xece6793a746852724d2e48de93696b60d096eb96"
+        }
+    },
+    "SafeMath": {
+        "depOne": {
+            "address": "0xd9dd98aad4d31a349d7152112fad1bb98d48e8e2"
+        }
     }
 }
