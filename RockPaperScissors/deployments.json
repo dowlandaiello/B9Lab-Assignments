@@ -8,6 +8,9 @@
         },
         "depThree": {
             "address": "0xd875d67407cf0bc55aff007f054232a73e0f1c78"
+        },
+        "depFour": {
+            "address": "0xdffe574bbe35d1350d010d9a5e99cb727cbf26b1"
         }
     },
     "SafeMath": {

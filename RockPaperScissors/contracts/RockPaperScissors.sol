@@ -83,7 +83,7 @@ contract RockPaperScissors {
         emit PlayerJoinedGame(msg.sender, _inviteCode, block.number); // Emit joined game
     }
 
-    function move(bytes32 _inviteCode, uint _move) public payable {
+    function move(bytes32 _inviteCode, uint _move) public {
         require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
         require(Games[_inviteCode].RoundsPlayed != 2, "Game already finished."); // Check game hasn't already ended
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
