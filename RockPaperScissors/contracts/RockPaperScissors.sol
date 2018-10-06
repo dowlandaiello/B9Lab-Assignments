@@ -84,6 +84,30 @@ contract RockPaperScissors {
         Games[_inviteCode].Bets[msg.sender] += msg.value; // Add bet
     }
 
+    function claimBet(bytes32 _inviteCode) public {
+        require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
+        require(Games[_inviteCode].RoundsPlayed == 3, "Game hasn't finished."); // Check game hasn't already started
+        require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
+        require((winCount(_inviteCode, msg.sender) - winCount(_inviteCode, otherPlayer(msg.sender, Games[_inviteCode].Players))) >= 2, "Player didn't win game."); // Check won game
+
+        Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)] = 0; // Reset bet balance
+        Games[_inviteCode].Bets[msg.sender] = 0; // Reset bet balance
+
+        msg.sender.transfer(Games[_inviteCode].Bets[msg.sender]+Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)]); // Send wager
+    }
+
+    function winCount(bytes32 _inviteCode, address _address) view public returns (uint _winCount) {
+        uint z = 0; // Set wins iterator
+        
+        for (uint x = 0; x != 3; x++) { // Iterate through wins
+            if (Games[_inviteCode].RoundWinners[x] == _address) { // Check won round
+                z++; // Increment win count
+            }
+        }
+
+        return z; // Return win count
+    }
+
     function otherPlayer(address _value, address[] _array) pure internal returns (address _address) {
         for (uint x = 0; x != _array.length; x++) {
             if (_array[x] != _value) {
