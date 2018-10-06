@@ -22,6 +22,40 @@ contract RockPaperScissors {
         uint Block // Origin block
     );
 
+    event PlayerJoinedGame (
+        address Player, // Player joining game
+        bytes32 InviteCode, // Game invite code
+        uint Block // Origin block
+    );
+
+    event PlayerMadeMove (
+        address Player, // Player making move
+        uint Move, // Move value
+        bytes32 InviteCode, // Game invite code
+        uint Block // Origin block
+    );
+
+    event PlayerMadeBet (
+        address Player, // Player making bet
+        uint256 Value, // Value of bet
+        bytes32 InviteCode, // Game invite code
+        uint Block // Origin block
+    );
+
+    event PlayerClaimedBet (
+        address Player, // Player claiming bet
+        uint256 Value, // Value of bet
+        bytes32 InviteCode, // Game invite code
+        uint Block // Origin block
+    );
+
+    event PlayerWon (
+        address WinningPlayer, // Winning player
+        address LosingPlayer, // Losing player
+        bytes32 InviteCode, // Game invite code
+        uint Block // Win block
+    );
+
     mapping(bytes32 => Game) Games;
 
     function newGame() public returns (bytes32 _inviteCode) {
@@ -45,6 +79,8 @@ contract RockPaperScissors {
         require(Games[_inviteCode].RoundsPlayed == 0, "Game already started."); // Check game hasn't already started
 
         Games[_inviteCode].Players[emptyIndex(Games[_inviteCode].Players)] = msg.sender; // Set player
+
+        emit PlayerJoinedGame(msg.sender, _inviteCode, block.number); // Emit joined game
     }
 
     function move(bytes32 _inviteCode, uint _move) public payable {
@@ -55,6 +91,8 @@ contract RockPaperScissors {
 
         Games[_inviteCode].Moves[msg.sender].push(_move); // Append move
         Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)]; // Set player by move
+
+        emit PlayerMadeMove(msg.sender, _move, _inviteCode, block.number); // Emit made move
 
         if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[msg.sender].length) {
             uint PlayerOneMove = Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed]; // Fetch sender move
@@ -70,6 +108,18 @@ contract RockPaperScissors {
                 }
 
                 Games[_inviteCode].RoundsPlayed++; // Increment rounds played
+
+                if (Games[_inviteCode].RoundsPlayed == 2) { // Check if game finished
+                    address winner = msg.sender; // Default
+                    address loser = otherPlayer(msg.sender, Games[_inviteCode].Players);
+
+                    if ((winCount(_inviteCode, otherPlayer(msg.sender, Games[_inviteCode].Players)) - winCount(_inviteCode, msg.sender)) >= 2) { // Check who won
+                        winner = otherPlayer(msg.sender, Games[_inviteCode].Players); // Set winner address
+                        loser = msg.sender; // Set loser
+                    }
+
+                    emit PlayerWon(winner, loser, _inviteCode, block.number); // Emit player won
+                }
             }
         }
     }
@@ -80,6 +130,8 @@ contract RockPaperScissors {
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
 
         Games[_inviteCode].Bets[msg.sender] += msg.value; // Add bet
+
+        emit PlayerMadeBet(msg.sender, msg.value, _inviteCode, block.number); // Emit made bet
     }
 
     function claimBet(bytes32 _inviteCode) public {
@@ -92,6 +144,8 @@ contract RockPaperScissors {
         Games[_inviteCode].Bets[msg.sender] = 0; // Reset bet balance
 
         msg.sender.transfer(Games[_inviteCode].Bets[msg.sender].add(Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)])); // Send wager
+
+        emit PlayerClaimedBet(msg.sender, Games[_inviteCode].Bets[msg.sender].add(Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)]), _inviteCode, block.number); // Emit claimed bet
     }
 
     function winCount(bytes32 _inviteCode, address _address) view public returns (uint _winCount) {
