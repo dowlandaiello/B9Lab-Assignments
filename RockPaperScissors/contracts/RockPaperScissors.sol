@@ -6,13 +6,16 @@ contract RockPaperScissors {
     using SafeMath for uint256;
 
     struct Game {
+        bool Initialized; // Game initialized
         address[] Players; // Players in game
         bytes32 InviteCode; // Game invitecode
         bool GameFinished; // Game finished
         uint Block; // Origin block
         uint RoundsPlayed; // Rounds played
+        address[] RoundWinners; // Winner of each round
         mapping(address => uint) Bets; // Bets
         mapping(address => uint[]) Moves; // Moves
+        mapping(uint => address) PlayerByMove; // Find player by move
     }
 
     event NewGame (
@@ -25,10 +28,11 @@ contract RockPaperScissors {
 
     function newGame() public returns (bytes32 _inviteCode) {
         address[] memory players = new address[](2); // Initialize array
+        address[] memory roundWinners = new address[](3); // Initialize array
 
         players[0] = msg.sender; // Append sender to players
 
-        Game memory game = Game(players, keccak256(abi.encodePacked(players, block.number)), false, block.number, 0); // Initialize game
+        Game memory game = Game(true, players, keccak256(abi.encodePacked(players, block.number)), false, block.number, 0, roundWinners); // Initialize game
 
         Games[game.InviteCode] = game; // Append game to games list
 
@@ -37,20 +41,78 @@ contract RockPaperScissors {
         return game.InviteCode; // Return invite code
     }
 
+    function joinGame(bytes32 _inviteCode) public {
+        require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
+        require(Games[_inviteCode].Players[1] == 0, "Game already full."); // Check game isn't full
+        require(Games[_inviteCode].RoundsPlayed == 0, "Game already started."); // Check game hasn't already started
+
+        Games[_inviteCode].Players[emptyIndex(Games[_inviteCode].Players)] = msg.sender; // Set player
+    }
+
+    function move(bytes32 _inviteCode, uint _move) public payable {
+        require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
+        require(Games[_inviteCode].RoundsPlayed != 2, "Game already finished."); // Check game hasn't already ended
+        require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
+        require(Games[_inviteCode].Players[0] != 0, "Not enough players."); // Check enough players
+
+        Games[_inviteCode].Moves[msg.sender].push(_move); // Append move
+        Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+_move]; // Set player by move
+
+        if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[msg.sender].length) {
+            uint PlayerOneMove = Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed]; // Fetch sender move
+            uint OtherPlayerMove = Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)][Games[_inviteCode].RoundsPlayed]; // Fetch other player move
+
+            if (PlayerOneMove != OtherPlayerMove) { // Check didn't make same move
+                if (PlayerOneMove == 1 || OtherPlayerMove == 1) { // Check for rock
+                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+1]; // Add score
+                } else if (PlayerOneMove == 2 || OtherPlayerMove == 2) { // Check for paper
+                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+2]; // Add score
+                } else if (PlayerOneMove == 3 || OtherPlayerMove == 3) { // Check for scissors
+                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+3]; // Add score
+                }
+
+                Games[_inviteCode].RoundsPlayed++; // Increment rounds played
+            }
+        }
+    }
+
     function bet(bytes32 _inviteCode) public payable {
+        require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
         require(Games[_inviteCode].RoundsPlayed == 0, "Game already started."); // Check game hasn't already started
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
 
         Games[_inviteCode].Bets[msg.sender] += msg.value; // Add bet
     }
 
-    function isIn(address value, address[] _array) pure internal returns (bool _isIn) {
+    function otherPlayer(address _value, address[] _array) pure internal returns (address _address) {
         for (uint x = 0; x != _array.length; x++) {
-            if (_array[x] == value) {
+            if (_array[x] != _value) {
+                return _array[x]; // Found value
+            }
+        }
+
+        return 0; // Reached end of array
+    }
+
+    function isIn(address _value, address[] _array) pure internal returns (bool _isIn) {
+        for (uint x = 0; x != _array.length; x++) {
+            if (_array[x] == _value) {
                 return true; // Found value
             }
         }
 
         return false; // Reached end of array
     }
+
+    function emptyIndex(address[] _array) pure internal returns (uint _emptyIndex) {
+        for (uint x = 0; x != _array.length; x++) {
+            if (_array[x] == 0) {
+                return x; // Found index
+            }
+        }
+
+        revert(); // Reached end of array
+    }
 }
+
+// TODO: bet claim at end of game
