@@ -89,7 +89,8 @@ contract RockPaperScissors {
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
         require(Games[_inviteCode].Players[0] != address(0), "Not enough players."); // Check enough players
 
-        Games[_inviteCode].Moves[msg.sender].push(_move); // Append move
+        Games[_inviteCode].Moves[msg.sender].length++; // Increment capacity
+        Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed] = _move; // Append move
         Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)]; // Set player by move
 
         emit PlayerMadeMove(msg.sender, _move, _inviteCode, block.number); // Emit made move
