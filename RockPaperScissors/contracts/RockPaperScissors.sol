@@ -56,7 +56,7 @@ contract RockPaperScissors {
         uint Block // Win block
     );
 
-    mapping(bytes32 => Game) Games;
+    mapping(bytes32 => Game) public Games;
 
     function newGame() public returns (bytes32 _inviteCode) {
         address[] memory players = new address[](2); // Initialize array
@@ -87,7 +87,7 @@ contract RockPaperScissors {
         require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
         require(Games[_inviteCode].RoundsPlayed != 2, "Game already finished."); // Check game hasn't already ended
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
-        require(Games[_inviteCode].Players[0] != 0, "Not enough players."); // Check enough players
+        require(Games[_inviteCode].Players[0] != address(0), "Not enough players."); // Check enough players
 
         Games[_inviteCode].Moves[msg.sender].push(_move); // Append move
         Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)]; // Set player by move
