@@ -20,6 +20,9 @@
         },
         "depSeven": {
             "address": "0x6d662d45043f768b6a4ab4a64f71c0ef4d7b3f21"
+        },
+        "depEight": {
+            "address": "0xfc5c0fba7e02663f1dd38f99f84b9a6d1af1f615"
         }
     },
     "SafeMath": {
