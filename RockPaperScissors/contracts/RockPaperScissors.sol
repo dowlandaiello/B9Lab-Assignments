@@ -88,6 +88,7 @@ contract RockPaperScissors {
         require(Games[_inviteCode].RoundsPlayed != 2, "Game already finished."); // Check game hasn't already ended
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
         require(Games[_inviteCode].Players[0] != address(0), "Not enough players."); // Check enough players
+        require(Games[_inviteCode].Moves[msg.sender].length <= Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)].length.add(1), "Other player hasn't moved yet."); // Check other player moved
 
         Games[_inviteCode].Moves[msg.sender].length++; // Increment capacity
         Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed] = _move; // Append move
@@ -95,11 +96,13 @@ contract RockPaperScissors {
 
         emit PlayerMadeMove(msg.sender, _move, _inviteCode, block.number); // Emit made move
 
-        if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[msg.sender].length) {
+        if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)].length) {
             uint PlayerOneMove = Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed]; // Fetch sender move
             uint OtherPlayerMove = Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)][Games[_inviteCode].RoundsPlayed]; // Fetch other player move
 
             if (PlayerOneMove != OtherPlayerMove) { // Check didn't make same move
+                Games[_inviteCode].RoundWinners.length++; // Increment capacity
+                
                 if (PlayerOneMove == 1 || OtherPlayerMove == 1) { // Check for rock
                     Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)]; // Add score
                 } else if (PlayerOneMove == 2 || OtherPlayerMove == 2) { // Check for paper
