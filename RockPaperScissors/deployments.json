@@ -14,6 +14,9 @@
         },
         "depFive": {
             "address": "0x285fdecc0487ead6b76353ba7136c510d69c6c02"
+        },
+        "depSix": {
+            "address": "0xc626334e7e3f4776cb3b2289f07a84f83fe4e568"
         }
     },
     "SafeMath": {
