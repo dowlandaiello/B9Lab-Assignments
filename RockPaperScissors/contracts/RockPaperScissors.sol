@@ -56,7 +56,7 @@ contract RockPaperScissors {
         require(Games[_inviteCode].Players[0] != 0, "Not enough players."); // Check enough players
 
         Games[_inviteCode].Moves[msg.sender].push(_move); // Append move
-        Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+_move]; // Set player by move
+        Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)]; // Set player by move
 
         if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[msg.sender].length) {
             uint PlayerOneMove = Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed]; // Fetch sender move
@@ -64,11 +64,11 @@ contract RockPaperScissors {
 
             if (PlayerOneMove != OtherPlayerMove) { // Check didn't make same move
                 if (PlayerOneMove == 1 || OtherPlayerMove == 1) { // Check for rock
-                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+1]; // Add score
+                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)]; // Add score
                 } else if (PlayerOneMove == 2 || OtherPlayerMove == 2) { // Check for paper
-                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+2]; // Add score
+                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)]; // Add score
                 } else if (PlayerOneMove == 3 || OtherPlayerMove == 3) { // Check for scissors
-                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed+3]; // Add score
+                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)]; // Add score
                 }
 
                 Games[_inviteCode].RoundsPlayed++; // Increment rounds played
@@ -93,7 +93,7 @@ contract RockPaperScissors {
         Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)] = 0; // Reset bet balance
         Games[_inviteCode].Bets[msg.sender] = 0; // Reset bet balance
 
-        msg.sender.transfer(Games[_inviteCode].Bets[msg.sender]+Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)]); // Send wager
+        msg.sender.transfer(Games[_inviteCode].Bets[msg.sender].add(Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)])); // Send wager
     }
 
     function winCount(bytes32 _inviteCode, address _address) view public returns (uint _winCount) {
