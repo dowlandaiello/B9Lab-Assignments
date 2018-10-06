@@ -5,6 +5,9 @@
         },
         "depTwo": {
             "address": "0x4cdc318df2f427846b5543eb70d782e72e0c4f58"
+        },
+        "depThree": {
+            "address": "0xd875d67407cf0bc55aff007f054232a73e0f1c78"
         }
     },
     "SafeMath": {
