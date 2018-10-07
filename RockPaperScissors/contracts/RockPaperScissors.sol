@@ -11,6 +11,7 @@ contract RockPaperScissors {
         uint Block; // Origin block
         uint RoundsPlayed; // Rounds played
         address[] RoundWinners; // Winner of each round
+        address Winner;
         mapping(address => uint) Bets; // Bets
         mapping(address => uint[]) Moves; // Moves
         mapping(uint => address) PlayerByMove; // Find player by move
@@ -49,6 +50,13 @@ contract RockPaperScissors {
         uint Block // Origin block
     );
 
+    event PlayerWonRound (
+        address WinningPlayer, // Winning player
+        address LosingPlayer, // Losing player
+        bytes32 InviteCode, // Game invite code
+        uint Block // Win block
+    );
+
     event PlayerWon (
         address WinningPlayer, // Winning player
         address LosingPlayer, // Losing player
@@ -64,7 +72,7 @@ contract RockPaperScissors {
 
         players[0] = msg.sender; // Append sender to players
 
-        Game memory game = Game(true, players, keccak256(abi.encodePacked(players, block.number)), false, block.number, 0, roundWinners); // Initialize game
+        Game memory game = Game(true, players, keccak256(abi.encodePacked(players, block.number)), false, block.number, 0, roundWinners, 0); // Initialize game
 
         Games[game.InviteCode] = game; // Append game to games list
 
@@ -93,7 +101,7 @@ contract RockPaperScissors {
 
         Games[_inviteCode].Moves[msg.sender].length++; // Increment capacity
         Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed] = _move; // Append move
-        Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)]; // Set player by move
+        Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)] = msg.sender; // Set player by move
 
         emit PlayerMadeMove(msg.sender, _move, _inviteCode, block.number); // Emit made move
 
@@ -106,10 +114,16 @@ contract RockPaperScissors {
 
                 if (PlayerOneMove == 1 || OtherPlayerMove == 1) { // Check for rock
                     Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)]; // Add score
+
+                    emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], Games[_inviteCode].Players), _inviteCode, block.number);
                 } else if (PlayerOneMove == 2 || OtherPlayerMove == 2) { // Check for paper
                     Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)]; // Add score
+
+                    emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], Games[_inviteCode].Players), _inviteCode, block.number);
                 } else if (PlayerOneMove == 3 || OtherPlayerMove == 3) { // Check for scissors
                     Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)]; // Add score
+
+                    emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], Games[_inviteCode].Players), _inviteCode, block.number);
                 }
 
                 Games[_inviteCode].RoundsPlayed++; // Increment rounds played
@@ -122,6 +136,8 @@ contract RockPaperScissors {
                         winner = otherPlayer(msg.sender, Games[_inviteCode].Players); // Set winner address
                         loser = msg.sender; // Set loser
                     }
+
+                    Games[_inviteCode].Winner = winner; // Set winner
 
                     emit PlayerWon(winner, loser, _inviteCode, block.number); // Emit player won
                 }
@@ -143,7 +159,7 @@ contract RockPaperScissors {
         require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
         require(Games[_inviteCode].RoundsPlayed == 3, "Game hasn't finished."); // Check game hasn't already started
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
-        require(winCount(_inviteCode, msg.sender) >= 2, "Player didn't win game."); // Check won game
+        require(Games[_inviteCode].Winner == msg.sender, "Player didn't win game."); // Check won game
 
         uint256 betVal = Games[_inviteCode].Bets[msg.sender].add(Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)]); // Calculate reward
 
