@@ -32,6 +32,9 @@
         },
         "depEleven": {
             "address": "0xc42e8f2b1c4fb8e9e996c47d7679ac1ccb7f558e"
+        },
+        "depTwelve": {
+            "address": "0x6691c0be762284c4831146b55f929bd61895ea86"
         }
     },
     "SafeMath": {

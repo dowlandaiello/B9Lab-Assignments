@@ -113,14 +113,40 @@ contract RockPaperScissors {
                 Games[_inviteCode].RoundWinners.length++; // Increment capacity
 
                 if (PlayerOneMove == 1 || OtherPlayerMove == 1) { // Check for rock
-                    Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)]; // Add score
+                    if (PlayerOneMove == 3 || OtherPlayerMove == 3) { // Check for scissors
+                        Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)]; // Add score
 
-                    emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], Games[_inviteCode].Players), _inviteCode, block.number);
+                        emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], Games[_inviteCode].Players), _inviteCode, block.number);
+                    } else if (PlayerOneMove == 2 || OtherPlayerMove == 2) { // Check for paper
+                        Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)]; // Add score
+
+                        emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], Games[_inviteCode].Players), _inviteCode, block.number);
+                    }
                 } else if (PlayerOneMove == 2 || OtherPlayerMove == 2) { // Check for paper
+                    if (PlayerOneMove == 1 || OtherPlayerMove == 1) {
+                        Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)]; // Add score
+
+                        emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], Games[_inviteCode].Players), _inviteCode, block.number);
+                    } else if (PlayerOneMove == 3 || OtherPlayerMove == 3) {
+                        Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)]; // Add score
+
+                        emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], Games[_inviteCode].Players), _inviteCode, block.number);
+                    }
+
                     Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)]; // Add score
 
                     emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(2)], Games[_inviteCode].Players), _inviteCode, block.number);
                 } else if (PlayerOneMove == 3 || OtherPlayerMove == 3) { // Check for scissors
+                    if (PlayerOneMove == 2 || OtherPlayerMove == 2) {
+                        Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)]; // Add score
+
+                        emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], Games[_inviteCode].Players), _inviteCode, block.number);
+                    } else if (PlayerOneMove == 1 || OtherPlayerMove == 1) {
+                        Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)]; // Add score
+
+                        emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(1)], Games[_inviteCode].Players), _inviteCode, block.number);
+                    }
+
                     Games[_inviteCode].RoundWinners[Games[_inviteCode].RoundsPlayed] = Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)]; // Add score
 
                     emit PlayerWonRound(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], otherPlayer(Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(3)], Games[_inviteCode].Players), _inviteCode, block.number);
