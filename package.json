@@ -19,9 +19,8 @@
   "dependencies": {
     "connect": "^3.6.6",
     "scrypt": "^6.0.3",
-    "server-static": "^2.0.5",
     "sha3": "^1.2.2",
-    "truffle": "4.0.7",
+    "truffle": "^4.1.14",
     "truffle-hdwallet-provider": "0.0.6",
     "truffle-hdwallet-provider-privkey": "^0.3.0",
     "web3": "^1.0.0-beta.36"
