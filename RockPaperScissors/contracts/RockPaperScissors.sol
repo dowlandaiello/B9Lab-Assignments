@@ -86,7 +86,7 @@ contract RockPaperScissors {
     function move(bytes32 _inviteCode, uint _move) public {
         require(_move > 0 && _move < 4, "Invalid move"); // Check for valid move
         require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
-        require(Games[_inviteCode].RoundsPlayed != 2, "Game already finished."); // Check game hasn't already ended
+        require(Games[_inviteCode].RoundsPlayed != 3, "Game already finished."); // Check game hasn't already ended
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
         require(Games[_inviteCode].Players[0] != address(0), "Not enough players."); // Check enough players
         require(Games[_inviteCode].Moves[msg.sender].length <= Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)].length, "Other player hasn't moved yet."); // Check other player moved
@@ -114,7 +114,7 @@ contract RockPaperScissors {
 
                 Games[_inviteCode].RoundsPlayed++; // Increment rounds played
 
-                if (Games[_inviteCode].RoundsPlayed == 2) { // Check if game finished
+                if (Games[_inviteCode].RoundsPlayed == 3) { // Check if game finished
                     address winner = msg.sender; // Default
                     address loser = otherPlayer(msg.sender, Games[_inviteCode].Players);
 

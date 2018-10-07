@@ -23,6 +23,12 @@
         },
         "depEight": {
             "address": "0xfc5c0fba7e02663f1dd38f99f84b9a6d1af1f615"
+        },
+        "depNine": {
+            "address": "0x077367d1d20ec23c6ae049c54fa2b4eb3092a082"
+        },
+        "depTen": {
+            "address": "0x0e25256d97963aa3ab70e56f80456bf79f4a76c2"
         }
     },
     "SafeMath": {
