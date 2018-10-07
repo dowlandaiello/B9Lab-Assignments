@@ -118,7 +118,7 @@ contract RockPaperScissors {
                     address winner = msg.sender; // Default
                     address loser = otherPlayer(msg.sender, Games[_inviteCode].Players);
 
-                    if ((winCount(_inviteCode, otherPlayer(msg.sender, Games[_inviteCode].Players)) - winCount(_inviteCode, msg.sender)) >= 2) { // Check who won
+                    if (winCount(_inviteCode, otherPlayer(msg.sender, Games[_inviteCode].Players)) >= 2) { // Check who won
                         winner = otherPlayer(msg.sender, Games[_inviteCode].Players); // Set winner address
                         loser = msg.sender; // Set loser
                     }
@@ -143,12 +143,14 @@ contract RockPaperScissors {
         require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
         require(Games[_inviteCode].RoundsPlayed == 3, "Game hasn't finished."); // Check game hasn't already started
         require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
-        require((winCount(_inviteCode, msg.sender) - winCount(_inviteCode, otherPlayer(msg.sender, Games[_inviteCode].Players))) >= 2, "Player didn't win game."); // Check won game
+        require(winCount(_inviteCode, msg.sender) >= 2, "Player didn't win game."); // Check won game
+
+        uint256 betVal = Games[_inviteCode].Bets[msg.sender].add(Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)]); // Calculate reward
 
         Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)] = 0; // Reset bet balance
         Games[_inviteCode].Bets[msg.sender] = 0; // Reset bet balance
 
-        msg.sender.transfer(Games[_inviteCode].Bets[msg.sender].add(Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)])); // Send wager
+        msg.sender.transfer(betVal); // Send wager
 
         emit PlayerClaimedBet(msg.sender, Games[_inviteCode].Bets[msg.sender].add(Games[_inviteCode].Bets[otherPlayer(msg.sender, Games[_inviteCode].Players)]), _inviteCode, block.number); // Emit claimed bet
     }
