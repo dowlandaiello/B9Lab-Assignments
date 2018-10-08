@@ -1,4 +1,4 @@
-# rockpaperscissors
+# ethpaperscissors
 
 ## Project setup
 ```

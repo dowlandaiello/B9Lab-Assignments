@@ -1,6 +1,6 @@
 {
-  "name": "rockpaperscissors",
-  "short_name": "rockpaperscissors",
+  "name": "ethpaperscissors",
+  "short_name": "ethpaperscissors",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",
