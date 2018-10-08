@@ -4,14 +4,16 @@ import state from './state';
 import { getWeb3 } from '../util/getWeb3';
 
 /* eslint no-param-reassign: 0 */
+/* eslint no-shadow: 0 */
+/* eslint import/prefer-default-export: 0 */
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+export const store = new Vuex.Store({
   strict: true,
   state,
   mutations: {
-    registerWeb3Instance(stateInstance, payload) {
+    registerWeb3Instance(state, payload) {
       console.log('registerWeb3instance Mutation being executed', payload);
       const result = payload;
       const web3Copy = state.web3;
@@ -20,7 +22,7 @@ export default new Vuex.Store({
       web3Copy.balance = parseInt(result.balance, 10);
       web3Copy.isInjected = result.injectedWeb3;
       web3Copy.web3Instance = result.web3;
-      stateInstance.web3 = web3Copy;
+      state.web3 = web3Copy;
     },
   },
   actions: {
