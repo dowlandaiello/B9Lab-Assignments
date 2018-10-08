@@ -10,11 +10,11 @@ contract Remittance {
     event attemptedClaim(address claimant, address claimAddress, bytes32 publicKey, uint amount); // Log claim
     event attemptedWithdrawal(address withdrawer, uint balanceMaturity, uint amount); // Log withdrawal
     
-    function deposit(string privatekey1, string privatekey2) public payable {
+    function deposit(bytes32 publicKey) public payable {
         balances[msg.sender] = msg.value; // Set user balance
         balanceMaturity[msg.sender] = block.number; // Set updated time
 
-        publicKeys[msg.sender] = keccak256(abi.encodePacked(privatekey1, privatekey2)); // Generate public key
+        publicKeys[msg.sender] = publicKey; // Generate public key
 
         emit deposited(msg.sender, publicKeys[msg.sender], msg.value); // Send deposit event
     }
@@ -24,7 +24,7 @@ contract Remittance {
 
         emit attemptedClaim(msg.sender, claimAddress, publicKeys[claimAddress], balance); // Send claim event
 
-        require(keccak256(abi.encodePacked(privatekey1, privatekey2)) == publicKeys[claimAddress], "Invalid private keys."); // Check for matching privatekeys
+        require(keccak256(abi.encodePacked(privatekey1, privatekey2)) == publicKeys[claimAddress], "Invalid private keys.");
         require(msg.sender != claimAddress, "Cannot claim own balance (request a withdrawal instead)."); // Check that claimant isn't issuer
 
         balances[claimAddress] = 0; // Reset balance
@@ -38,7 +38,7 @@ contract Remittance {
 
         emit attemptedWithdrawal(msg.sender, balanceMaturity[msg.sender], balances[msg.sender]); // Send withdrawal event
 
-        require((block.number - balanceMaturity[msg.sender]) > 60, "Balance is not yet eligible for withdrawal."); // Check balance is mature enough for a withdrawal
+        require((block.number - balanceMaturity[msg.sender]) > 60, "Balance is not yet eligible for withdrawal.");
 
         balances[msg.sender] = 0; // Rest balance
         balanceMaturity[msg.sender] = block.number; // Reset maturity
