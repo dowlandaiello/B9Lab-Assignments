@@ -10,7 +10,7 @@ import Web3 from 'web3';
 
 /* eslint no-param-reassign: 0 */
 
-const getWeb3 = new Promise(((resolve, reject) => {
+export const getWeb3 = new Promise(((resolve, reject) => {
   // Check for injected web3 (mist/metamask)
   const web3js = window.web3;
   if (typeof web3js !== 'undefined') {
