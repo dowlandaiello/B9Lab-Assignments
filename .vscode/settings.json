@@ -3,6 +3,7 @@
         "Ganache",
         "Kovan",
         "Morden",
-        "hdwallet"
+        "hdwallet",
+        "metamask"
     ]
 }
