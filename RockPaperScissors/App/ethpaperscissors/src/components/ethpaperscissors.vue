@@ -7,6 +7,10 @@
 
     export default {
         name: 'ethpaperscissors',
+        beforeCreate () {
+            console.log('registerWeb3 Action dispatched from ethpaperscissors.vue')
+            this.$store.dispatch('registerWeb3')
+        },
         components: {
             'metamask': Metamask
         }

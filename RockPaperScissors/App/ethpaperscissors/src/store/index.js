@@ -3,12 +3,26 @@ import Vuex from 'vuex';
 import state from './state';
 import { getWeb3 } from '../util/getWeb3';
 
+/* eslint no-param-reassign: 0 */
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   strict: true,
   state,
-  mutations: {},
+  mutations: {
+    registerWeb3Instance(stateInstance, payload) {
+      console.log('registerWeb3instance Mutation being executed', payload);
+      const result = payload;
+      const web3Copy = state.web3;
+      web3Copy.coinbase = result.coinbase;
+      web3Copy.networkId = result.networkId;
+      web3Copy.balance = parseInt(result.balance, 10);
+      web3Copy.isInjected = result.injectedWeb3;
+      web3Copy.web3Instance = result.web3;
+      stateInstance.web3 = web3Copy;
+    },
+  },
   actions: {
     registerWeb3({ commit }) {
       console.log('registerWeb3 Action being executed');
