@@ -2,46 +2,50 @@ pragma solidity ^0.4.24; // Specify compiler version
 
 // Init remittance contract
 contract Remittance {
-    mapping (address => uint256) balances; // Balance of each address
-    mapping (address => uint256) balanceMaturity; // Last time balance was updated
-    mapping (address => bytes32) publicKeys; // Public key associated with each address
+    uint withdrawalDelay = 60; // Time before withdrawal can be made
+
+    struct Deposit {
+        address Sender;
+        uint256 Balance;
+        uint256 Deadline;
+        bytes32 PublicKey;
+    }
+
+    mapping (bytes32 => Deposit) Deposits; // Deposits by public key
 
     event deposited(address sender, bytes32 publicKey, uint amount); // Log deposit
     event attemptedClaim(address claimant, address claimAddress, bytes32 publicKey, uint amount); // Log claim
-    event attemptedWithdrawal(address withdrawer, uint balanceMaturity, uint amount); // Log withdrawal
+    event attemptedWithdrawal(address withdrawer, uint blockTime, uint amount); // Log withdrawal
     
-    function deposit(bytes32 publicKey) public payable {
-        balances[msg.sender] = msg.value; // Set user balance
-        balanceMaturity[msg.sender] = block.number; // Set updated time
+    function deposit(bytes32 _publicKey) public payable {
+        require(Deposits[_publicKey].Balance == 0, "Already deposit with public key"); // Check not existing
+        Deposits[_publicKey] = Deposit(msg.sender, msg.value, block.number + withdrawalDelay, _publicKey); // Set deposit
 
-        publicKeys[msg.sender] = publicKey; // Generate public key
-
-        emit deposited(msg.sender, publicKeys[msg.sender], msg.value); // Send deposit event
+        emit deposited(msg.sender, _publicKey, msg.value); // Send deposit event
     }
 
-    function claim(address claimAddress, string privatekey1, string privatekey2) public {
-        uint balance = balances[claimAddress]; // Store balance
+    function claim(bytes32 _publicKey, string _privatekey1, string _privatekey2) public {
+        uint balance = Deposits[_publicKey].Balance; // Store balance
 
-        emit attemptedClaim(msg.sender, claimAddress, publicKeys[claimAddress], balance); // Send claim event
+        emit attemptedClaim(msg.sender, Deposits[_publicKey].Sender, Deposits[_publicKey].PublicKey, Deposits[_publicKey].Balance);
 
-        require(keccak256(abi.encodePacked(privatekey1, privatekey2)) == publicKeys[claimAddress], "Invalid private keys.");
-        require(msg.sender != claimAddress, "Cannot claim own balance (request a withdrawal instead)."); // Check that claimant isn't issuer
+        require(keccak256(abi.encodePacked(_privatekey1, _privatekey2)) == Deposits[_publicKey].PublicKey, "Invalid private keys.");
+        require(msg.sender != Deposits[_publicKey].Sender, "Cannot claim own balance (request a withdrawal instead).");
 
-        balances[claimAddress] = 0; // Reset balance
-        balanceMaturity[claimAddress] = block.number; // Rest maturity
+        Deposits[_publicKey].Balance = 0; // Reset balance
 
         msg.sender.transfer(balance); // Transfer to specified claim address
     }
 
-    function withdraw() public {
-        uint balance = balances[msg.sender]; // Store balance
+    function withdraw(bytes32 _publicKey) public {
+        uint balance = Deposits[_publicKey].Balance; // Store balance
 
-        emit attemptedWithdrawal(msg.sender, balanceMaturity[msg.sender], balances[msg.sender]); // Send withdrawal event
+        emit attemptedWithdrawal(msg.sender, block.number, Deposits[_publicKey].Balance); // Send withdrawal event
 
-        require((block.number - balanceMaturity[msg.sender]) > 60, "Balance is not yet eligible for withdrawal.");
+        require(block.number >= Deposits[_publicKey].Deadline, "Balance is not yet eligible for withdrawal."); // Check is ready for withdrawal
+        require(msg.sender == Deposits[_publicKey].Sender, "Non-owner cannot withdraw."); // Check owner is requesting withdrawal
 
-        balances[msg.sender] = 0; // Rest balance
-        balanceMaturity[msg.sender] = block.number; // Reset maturity
+        Deposits[_publicKey].Balance = 0; // Rest balance
 
         msg.sender.transfer(balance); // Transfer ether
     }
