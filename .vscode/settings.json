@@ -3,6 +3,8 @@
         "Ganache",
         "Kovan",
         "Morden",
+        "Vuex",
+        "ethpaperscissors",
         "hdwallet",
         "metamask"
     ]
