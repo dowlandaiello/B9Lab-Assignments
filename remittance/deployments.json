@@ -1,5 +1,8 @@
 {
     "depOne": {
         "address": "0xb5a9de3c7e81637bcf67d7d42bf552d05d85d737"
+    },
+    "depTwo": {
+        "address": "0xad46abcafa2400f9f77411bd4d22a1777adb1bb0"
     }
 }
