@@ -27,7 +27,7 @@ export const getWeb3 = new Promise(((resolve, reject) => {
   }
 })).then(result => new Promise(((resolve, reject) => {
   // Retrieve network ID
-  result.web3.eth.net.getId()((err, networkId) => {
+  result.web3().eth.net.getId((err, networkId) => {
     if (err) {
       // If we can't find a networkId keep result the same and reject the promise
       reject(new Error('Unable to retrieve network ID'));
