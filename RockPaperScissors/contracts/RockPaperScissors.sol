@@ -31,7 +31,6 @@ contract RockPaperScissors {
 
     event PlayerMadeMove (
         address Player, // Player making move
-        uint Move, // Move value
         bytes32 InviteCode, // Game invite code
         uint Block // Origin block
     );
@@ -103,7 +102,7 @@ contract RockPaperScissors {
         Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed] = _move; // Append move
         Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)] = msg.sender; // Set player by move
 
-        emit PlayerMadeMove(msg.sender, _move, _inviteCode, block.number); // Emit made move
+        emit PlayerMadeMove(msg.sender, _inviteCode, block.number); // Emit made move
 
         if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)].length) {
             uint PlayerOneMove = Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed]; // Fetch sender move
