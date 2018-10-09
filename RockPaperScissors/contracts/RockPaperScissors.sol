@@ -14,6 +14,7 @@ contract RockPaperScissors {
         address Winner;
         mapping(address => uint) Bets; // Bets
         mapping(address => uint[]) Moves; // Moves
+        mapping(address => bytes32) Commits; // Commits
         mapping(uint => address) PlayerByMove; // Find player by move
     }
 
@@ -31,6 +32,7 @@ contract RockPaperScissors {
 
     event PlayerMadeMove (
         address Player, // Player making move
+        uint Move, // move
         bytes32 InviteCode, // Game invite code
         uint Block // Origin block
     );
@@ -90,7 +92,18 @@ contract RockPaperScissors {
         emit PlayerJoinedGame(msg.sender, _inviteCode, block.number); // Emit joined game
     }
 
-    function move(bytes32 _inviteCode, uint _move) public {
+    function commitMove(bytes32 _inviteCode, bytes32 _encryptedMove) public {
+        require(Games[_inviteCode].Initialized == true, "Game does not exit"); // Check game exists
+        require(Games[_inviteCode].RoundsPlayed != 3, "Game already finished."); // Check game hasn't already ended
+        require(isIn(msg.sender, Games[_inviteCode].Players), "Player not in game."); // Check player is in game
+        require(Games[_inviteCode].Players[0] != address(0), "Not enough players."); // Check enough players
+
+        Games[_inviteCode].Commits[msg.sender] = _encryptedMove; // Commit
+    }
+
+    function revealMove(bytes32 _inviteCode, uint _move) public {
+        require(Games[_inviteCode].Commits[msg.sender] != 0 && Games[_inviteCode].Commits[otherPlayer(msg.sender, Games[_inviteCode].Players)] != 0, "Not all players have committed a move yet."); // Check committed
+        require(keccak256(abi.encodePacked(_move)) == Games[_inviteCode].Commits[msg.sender], "Invalid move (doesn't match commit)");
         require(_move > 0 && _move < 4, "Invalid move"); // Check for valid move
         require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
         require(Games[_inviteCode].RoundsPlayed != 3, "Game already finished."); // Check game hasn't already ended
@@ -102,7 +115,7 @@ contract RockPaperScissors {
         Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed] = _move; // Append move
         Games[_inviteCode].PlayerByMove[Games[_inviteCode].RoundsPlayed.add(_move)] = msg.sender; // Set player by move
 
-        emit PlayerMadeMove(msg.sender, _inviteCode, block.number); // Emit made move
+        emit PlayerMadeMove(msg.sender, _move, _inviteCode, block.number); // Emit made move
 
         if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)].length) {
             uint PlayerOneMove = Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed]; // Fetch sender move
