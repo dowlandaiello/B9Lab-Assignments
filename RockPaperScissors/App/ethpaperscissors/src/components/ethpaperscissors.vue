@@ -23,7 +23,7 @@
             return {
                 amount: null,
                 move: null,
-                inviteCode: null,
+                inviteCode: "",
                 pending: false,
                 receipt: null
             }
@@ -46,7 +46,29 @@
 
                 this.$store.state.contractInstance().methods.newGame().send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
                     this.receipt = receipt;
+
+                    this.inviteCode = receipt.events.NewGame.returnValues.InviteCode;
+
                     console.log(receipt);
+                    console.log(receipt.events.NewGame.returnValues.InviteCode);
+                }).on('error', console.error);
+            },
+            joinGame(event) {
+                if(this.pending == true) { // Check no pending games
+                    return; // Exit
+                }
+
+                console.log('Joining game'); // Log new game
+
+                this.pending = true; // Set pending game
+
+                console.log(this.$store.state.contractInstance());
+
+                this.$store.state.contractInstance().methods.joinGame.send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
+                    this.receipt = receipt;
+
+                    console.log(receipt);
+                    console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
                 }).on('error', console.error);
             }
         }
