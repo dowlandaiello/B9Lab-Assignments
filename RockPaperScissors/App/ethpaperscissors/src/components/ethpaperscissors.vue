@@ -24,7 +24,8 @@
                 amount: null,
                 move: null,
                 inviteCode: null,
-                pending: false
+                pending: false,
+                receipt: null
             }
         },
         mounted () {
@@ -41,7 +42,12 @@
                 
                 this.pending = true; // Set pending game
 
-                this.$store.state.contractInstance().newGame()
+                console.log(this.$store.state.contractInstance());
+
+                this.$store.state.contractInstance().methods.newGame().send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
+                    this.receipt = receipt;
+                    console.log(receipt);
+                }).on('error', console.error);
             }
         }
     }
