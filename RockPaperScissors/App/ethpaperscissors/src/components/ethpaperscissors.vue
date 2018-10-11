@@ -4,6 +4,9 @@
         <ul>
             <li v-on:click="newGame">New Game</li>
         </ul>
+        <p v-if="pending">Created game! Here's your invite code: {{ inviteCode }}</p>
+
+        <p v-if="loading">Transaction {{ txHash }} submitted, waiting for confirmation.</p>
     </div>
 </template>
 
@@ -23,9 +26,12 @@
             return {
                 amount: null,
                 move: null,
+                test: "test",
                 inviteCode: "",
                 pending: false,
-                receipt: null
+                receipt: null,
+                loading: false,
+                txHash: ""
             }
         },
         mounted () {
@@ -39,19 +45,26 @@
                 }
 
                 console.log('Initialized game'); // Log new game
-                
-                this.pending = true; // Set pending game
 
                 console.log(this.$store.state.contractInstance());
 
-                this.$store.state.contractInstance().methods.newGame().send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
-                    this.receipt = receipt;
+                this.$store.state.contractInstance().methods.newGame().send({from: this.$store.state.web3.coinbase, gas: 300000}).on('transactionHash', function(transactionHash) {
+                    this.loading = true; // Set loading
+                    this.txHash = transactionHash; // Get transaction hash
+                }.bind(this)).on('receipt', function(receipt) {
+                    this.pending = true; // Set pending game
+
+                    this.receipt = receipt; // Set receipt
 
                     this.inviteCode = receipt.events.NewGame.returnValues.InviteCode;
 
                     console.log(receipt);
-                    console.log(receipt.events.NewGame.returnValues.InviteCode);
-                }).on('error', console.error);
+                    console.log(this.inviteCode);
+
+                    this.loading = false;
+
+                    return string(this.inviteCode);
+                }.bind(this)).on('error', console.error);
             },
             joinGame(event) {
                 if(this.pending == true) { // Check no pending games
