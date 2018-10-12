@@ -3,15 +3,27 @@
         <metamask/>
         <ul>
             <li v-on:click="newGame">New Game</li>
+            <li v-on:click="joinGame">Join Game</li>
         </ul>
-        <p v-if="pending">Created game! Here's your invite code: {{ inviteCode }}</p>
+        <ul v-if="pending">
+            <li v-on:click="rock">Rock</li>
+            <li v-on:click="paper">Paper</li>
+            <li v-on:click="scissors">Scissors</li>
+        </ul>
+        <p v-if="pendingCreateGame">Created game! Here's your invite code: {{ inviteCode }}</p>
 
         <p v-if="loading">Transaction {{ txHash }} submitted, waiting for confirmation.</p>
+
+        <p v-if="errored">Error: {{ error }}</p>
+
+        <p v-if="waiting">Waiting for opponent's move...</p>
     </div>
 </template>
 
 <script>
     import Metamask from '@/components/metamask';
+
+    const keccak256 = require('keccak');
 
     export default {
         name: 'ethpaperscissors',
@@ -29,9 +41,16 @@
                 test: "test",
                 inviteCode: "",
                 pending: false,
+                pendingCreateGame: false,
+                pendingJoinGame: false,
                 receipt: null,
                 loading: false,
-                txHash: ""
+                txHash: "",
+                errored: false,
+                waiting: false,
+                won: false,
+                error: "",
+                privateKey: ""
             }
         },
         mounted () {
@@ -40,7 +59,12 @@
         },
         methods: {
             newGame(event) {
-                if(this.pending == true) { // Check no pending games
+                this.errored = false;
+
+                if(this.pendingCreateGame == true || this.pending == true) { // Check no pending games
+                    this.errored = true;
+                    this.error = new Error('Must finish all pending games');
+
                     return; // Exit
                 }
 
@@ -52,7 +76,7 @@
                     this.loading = true; // Set loading
                     this.txHash = transactionHash; // Get transaction hash
                 }.bind(this)).on('receipt', function(receipt) {
-                    this.pending = true; // Set pending game
+                    this.pendingCreateGame = true; // Set pending game
 
                     this.receipt = receipt; // Set receipt
 
@@ -64,21 +88,92 @@
                     this.loading = false;
 
                     return string(this.inviteCode);
-                }.bind(this)).on('error', console.error);
+                }.bind(this)).on('error', function(error) {
+                    this.errored = true;
+                    this.error = error;
+                    console.error(error);
+                });
             },
             joinGame(event) {
-                if(this.pending == true) { // Check no pending games
+                this.errored = false;
+
+                if(this.pendingJoinGame == true || this.pending == true) { // Check no pending games
+                    this.errored = true;
+                    this.error = new Error('Must finish all pending games');
+
                     return; // Exit
                 }
 
+                var inviteCode = prompt("Please Specify an Invite Code");
+
+                this.inviteCode = inviteCode; // Set invitecode
+
+                this.privateKey = Math.random().toString(36).substring(7); // Set privatekey
+
                 console.log('Joining game'); // Log new game
 
-                this.pending = true; // Set pending game
+                this.joinGame = true; // Set pending game
 
                 console.log(this.$store.state.contractInstance());
 
-                this.$store.state.contractInstance().methods.joinGame.send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
+                this.$store.state.contractInstance().methods.joinGame(inviteCode).send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
                     this.receipt = receipt;
+
+                    this.pending = true;
+
+                    console.log(receipt);
+                    console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
+                }).on('error', console.error);
+            },
+            rock(event) {
+                this.errored = false; // Set not errored
+
+                if(this.pending != true) { // Check not in a game
+                    this.errored = true; // Set errored
+                    this.error = new Error('Not currently in a game'); // Set error
+                }
+
+                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, keccak256(1, this.privateKey)).send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
+                    this.receipt = receipt;
+
+                    this.pending = true;
+                    this.waiting = true;
+
+                    console.log(receipt);
+                    console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
+                }).on('error', console.error);
+            },
+            paper(event) {
+                this.errored = false; // Set not errored
+
+                if(this.pending != true) { // Check not in a game
+                    this.errored = true; // Set errored
+                    this.error = new Error('Not currently in a game'); // Set error
+                }
+
+                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, keccak256(2, this.privateKey)).send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
+                    this.receipt = receipt;
+
+                    this.pending = true;
+                    this.waiting = true;
+
+                    console.log(receipt);
+                    console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
+                }).on('error', console.error);
+            },
+            scissors(event) {
+                this.errored = false; // Set not errored
+
+                if(this.pending != true) { // Check not in a game
+                    this.errored = true; // Set errored
+                    this.error = new Error('Not currently in a game'); // Set error
+                }
+
+                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, keccak256(3, this.privateKey)).send({from: this.$store.state.web3.coinbase}).on('receipt', function(receipt) {
+                    this.receipt = receipt;
+
+                    this.pending = true;
+                    this.waiting = true;
 
                     console.log(receipt);
                     console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
