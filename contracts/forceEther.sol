@@ -4,7 +4,7 @@ contract ForceEther {
     function Deposit() public payable {
 
     }
-    
+
     function Force(address destination) public {
         selfdestruct(destination); // Self destruct
     }

@@ -38,6 +38,9 @@
         },
         "depThirteen": {
             "address": "0x5ef51758449f9151b1bd06d4eabbba3dd0f7ded9"
+        },
+        "depFourteen": {
+            "address": "0x93a9bbdc482812d86f20351a4f642604e49a7b8c"
         }
     },
     "SafeMath": {

@@ -101,9 +101,9 @@ contract RockPaperScissors {
         Games[_inviteCode].Commits[msg.sender] = _encryptedMove; // Commit
     }
 
-    function revealMove(bytes32 _inviteCode, uint _move) public {
+    function revealMove(bytes32 _inviteCode, uint _move, bytes32 _privateKey) public {
         require(Games[_inviteCode].Commits[msg.sender] != 0 && Games[_inviteCode].Commits[otherPlayer(msg.sender, Games[_inviteCode].Players)] != 0, "Not all players have committed a move yet."); // Check committed
-        require(keccak256(abi.encodePacked(_move)) == Games[_inviteCode].Commits[msg.sender], "Invalid move (doesn't match commit)");
+        require(keccak256(abi.encodePacked(_move, _privateKey)) == Games[_inviteCode].Commits[msg.sender], "Invalid move (doesn't match commit)");
         require(_move > 0 && _move < 4, "Invalid move"); // Check for valid move
         require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
         require(Games[_inviteCode].RoundsPlayed != 3, "Game already finished."); // Check game hasn't already ended
