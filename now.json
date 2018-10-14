@@ -4,5 +4,8 @@
     "type": "npm",
     "scripts": {
         "start": "npm i && npm run build"
-    }
+    },
+    "files": [
+        "RockPaperScissors/App/ethpaperscissors/dist"
+    ]
 }
