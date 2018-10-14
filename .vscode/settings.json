@@ -9,5 +9,6 @@
         "hdwallet",
         "metamask",
         "nonpayable"
-    ]
+    ],
+    "git.enableCommitSigning": true
 }
