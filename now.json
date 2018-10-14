@@ -3,6 +3,7 @@
     "public": true,
     "type": "npm",
     "files": [
-        "RockPaperScissors/App/ethpaperscissors/dist"
+        "RockPaperScissors/App/ethpaperscissors/dist",
+        "RockPaperScissors"
     ]
 }

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd RockPaperScissors && cd App && cd ethpaperscissors && npm i && npm run build",
-    "build": "cd RockPaperScissors && cd App && cd ethpaperscissors && npm i && npm run build"
+    "start": "cd RockPaperScissors && cd App && cd ethpaperscissors && pwd && npm install && npm run build",
+    "build": "cd RockPaperScissors && cd App && cd ethpaperscissors && pwd && npm install && npm run build"
   },
   "repository": {
     "type": "git",
