@@ -3,5 +3,7 @@ node_js:
   - "node"
 env:
   - NODE_ENV=TEST
+before_script:
+  - npm install
 script:
   - npm run start
