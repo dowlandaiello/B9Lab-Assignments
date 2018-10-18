@@ -25,7 +25,7 @@
 
     const keccak256 = require('keccak');
 
-    const web3 = this.$store.state.web3;
+    const abi = require('ethereumjs-abi');
 
     export default {
         name: 'ethpaperscissors',
@@ -72,8 +72,6 @@
 
                 console.log('Initialized game'); // Log new game
 
-                console.log(this.$store.state.contractInstance());
-
                 this.$store.state.contractInstance().methods.newGame().send({from: this.$store.state.web3.coinbase, gas: 300000}).on('transactionHash', function(transactionHash) {
                     this.loading = true; // Set loading
                     this.txHash = transactionHash; // Get transaction hash
@@ -84,8 +82,7 @@
 
                     this.inviteCode = receipt.events.NewGame.returnValues.InviteCode;
 
-                    console.log(receipt);
-                    console.log(this.inviteCode);
+                    console.log('invite code: ' + this.inviteCode);
 
                     this.loading = false;
 
@@ -116,8 +113,6 @@
 
                 this.joinGame = true; // Set pending game
 
-                console.log(this.$store.state.contractInstance());
-
                 this.$store.state.contractInstance().methods.joinGame(inviteCode).send({from: this.$store.state.web3.coinbase}).on('transactionHash', function(transactionHash) {
                     this.loading = true; // Set loading
                     this.txHash = transactionHash; // Set txhash
@@ -128,7 +123,6 @@
 
                     this.loading = false;
 
-                    console.log(receipt);
                     console.log("Successfully joined game");
                 }.bind(this)).on('error', console.error);
             },
@@ -140,7 +134,10 @@
                     this.error = new Error('Not currently in a game'); // Set error
                 }
 
-                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, web3.sha3((1)  + this.privateKey)).send({from: this.$store.state.web3.coinbase}).on('transactionHash', function(transactionHash) {
+                var parameterTypes = ["uint", "bytes32"];
+                var parameterValues = [1, this.privateKey];
+
+                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, web3.sha3(abi.rawEncode(parameterTypes, parameterValues))).send({from: this.$store.state.web3.coinbase}).on('transactionHash', function(transactionHash) {
                     this.loading = true; // Set loading
                     this.txHash = transactionHash; // Set txhash
                 }.bind(this)).on('receipt', function(receipt) {
@@ -151,8 +148,9 @@
                     this.pending = true; // Set pending
                     this.waiting = true; // Set waiting
 
-                    console.log(receipt);
-                    console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
+                    this.$store.state.contractInstance().methods.getAllPlayersCommitted(this.inviteCode).call({from: this.$store.web3.eth.coinbase}, function(error, result) {
+                        console.log(result); // Log result
+                    });
                 }.bind(this)).on('error', console.error);
             },
             paper(event) {
@@ -163,7 +161,10 @@
                     this.error = new Error('Not currently in a game'); // Set error
                 }
 
-                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, web3.sha3((2)  + this.privateKey)).send({from: this.$store.state.web3.coinbase}).on('transactionHash', function(transactionHash) {
+                var parameterTypes = ["uint", "bytes32"];
+                var parameterValues = [2, this.privateKey];
+
+                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, web3.sha3(abi.rawEncode(parameterTypes, parameterValues))).send({from: this.$store.state.web3.coinbase}).on('transactionHash', function(transactionHash) {
                     this.loading = true; // Set loading
                     this.txHash = transactionHash; // Set txhash
                 }.bind(this)).on('receipt', function(receipt) {
@@ -174,8 +175,9 @@
                     this.pending = true; // Set pending
                     this.waiting = true; // Set waiting
 
-                    console.log(receipt);
-                    console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
+                    this.$store.state.contractInstance().methods.getAllPlayersCommitted(this.inviteCode).call({from: this.$store.web3.eth.coinbase}, function(error, result) {
+                        console.log(result); // Log result
+                    });
                 }.bind(this)).on('error', console.error);
             },
             scissors(event) {
@@ -186,7 +188,10 @@
                     this.error = new Error('Not currently in a game'); // Set error
                 }
 
-                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, web3.sha3((3)  + this.privateKey)).send({from: this.$store.state.web3.coinbase}).on('transactionHash', function(transactionHash) {
+                var parameterTypes = ["uint", "bytes32"];
+                var parameterValues = [3, this.privateKey];
+
+                this.$store.state.contractInstance().methods.commitMove(this.inviteCode, web3.sha3(abi.rawEncode(parameterTypes, parameterValues))).send({from: this.$store.state.web3.coinbase}).on('transactionHash', function(transactionHash) {
                     this.loading = true; // Set loading
                     this.txHash = transactionHash; // Set txhash
                 }.bind(this)).on('receipt', function(receipt) {
@@ -197,8 +202,9 @@
                     this.pending = true; // Set pending
                     this.waiting = true; // Set waiting
 
-                    console.log(receipt);
-                    console.log(receipt.events.PlayerJoinedGame.returnValues.Player);
+                    this.$store.state.contractInstance().methods.getAllPlayersCommitted(this.inviteCode).call({from: this.$store.web3.eth.coinbase}, function(error, result) {
+                        console.log(result); // Log result
+                    });
                 }.bind(this)).on('error', console.error);
             }
         }

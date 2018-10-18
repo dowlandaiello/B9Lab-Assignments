@@ -11,7 +11,8 @@ contract RockPaperScissors {
         uint Block; // Origin block
         uint RoundsPlayed; // Rounds played
         address[] RoundWinners; // Winner of each round
-        address Winner;
+        address Winner; // Game winner
+        bool AllPlayersCommitted; // Check all players committed
         mapping(address => uint) Bets; // Bets
         mapping(address => uint[]) Moves; // Moves
         mapping(address => bytes32) Commits; // Commits
@@ -73,7 +74,7 @@ contract RockPaperScissors {
 
         players[0] = msg.sender; // Append sender to players
 
-        Game memory game = Game(true, players, keccak256(abi.encodePacked(players, block.number)), false, block.number, 0, roundWinners, 0); // Initialize game
+        Game memory game = Game(true, players, keccak256(abi.encodePacked(players, block.number)), false, block.number, 0, roundWinners, 0, false); // Initialize game
 
         Games[game.InviteCode] = game; // Append game to games list
 
@@ -99,6 +100,10 @@ contract RockPaperScissors {
         require(Games[_inviteCode].Players[0] != address(0), "Not enough players."); // Check enough players
 
         Games[_inviteCode].Commits[msg.sender] = _encryptedMove; // Commit
+
+        if (Games[_inviteCode].Commits[otherPlayer(msg.sender, Games[_inviteCode].Players)] != 0) {
+            Games[_inviteCode].AllPlayersCommitted = true; // Set all players commmitted
+        }
     }
 
     function revealMove(bytes32 _inviteCode, uint _move, bytes32 _privateKey) public {
@@ -120,6 +125,9 @@ contract RockPaperScissors {
         if (Games[_inviteCode].Moves[msg.sender].length == Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)].length) {
             uint PlayerOneMove = Games[_inviteCode].Moves[msg.sender][Games[_inviteCode].RoundsPlayed]; // Fetch sender move
             uint OtherPlayerMove = Games[_inviteCode].Moves[otherPlayer(msg.sender, Games[_inviteCode].Players)][Games[_inviteCode].RoundsPlayed]; // Fetch other player move
+
+            Games[_inviteCode].Commits[msg.sender] = 0; // Reset commit
+            Games[_inviteCode].Commits[otherPlayer(msg.sender, Games[_inviteCode].Players)] = 0; // Reset other player commit
 
             if (PlayerOneMove != OtherPlayerMove) { // Check didn't make same move
                 Games[_inviteCode].RoundWinners.length++; // Increment capacity
@@ -181,6 +189,12 @@ contract RockPaperScissors {
                 }
             }
         }
+    }
+
+    function getAllPlayersCommitted(bytes32 _inviteCode) public view returns (bool _allPlayersCommitted) {
+        require(Games[_inviteCode].Initialized == true, "Game does not exist."); // Check game exists
+
+        return Games[_inviteCode].AllPlayersCommitted; // Return value
     }
 
     function bet(bytes32 _inviteCode) public payable {

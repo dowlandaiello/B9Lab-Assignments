@@ -10,5 +10,6 @@
         "metamask",
         "nonpayable"
     ],
-    "git.enableCommitSigning": true
+    "git.enableCommitSigning": true,
+    "cSpell.language": "en,en-US"
 }

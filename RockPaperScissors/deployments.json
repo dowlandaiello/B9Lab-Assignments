@@ -41,6 +41,15 @@
         },
         "depFourteen": {
             "address": "0x93a9bbdc482812d86f20351a4f642604e49a7b8c"
+        },
+        "depFifteen": {
+            "address": "0xe2737b063d465e9e20c2343a77d3df9ed29a12fb"
+        },
+        "depSixteen": {
+            "address": "0xfb3e7b97ab90219165785650331d4c1b68827d89"
+        },
+        "depSeventeen": {
+            "address": "0x59416ac6b4fe31da42a16cef1aa842c3c70ec242"
         }
     },
     "SafeMath": {
