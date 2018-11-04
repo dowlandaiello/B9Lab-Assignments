@@ -24,23 +24,26 @@ contract TestWarehouse is Warehouse {
     struct Order {
         string deliveryAddress; // Package destination
         address buyer; // Buyer
-        uint id; // Order ID
+        uint ProductID; // Order product ID
+        bytes32 ID; // Order ID
         bool shipped; // Order shipped
     }
 
     mapping(address => string) customerDeliveryAddresses; // Delivery addresses
-    mapping(uint => Order) orders; // Orders
+    mapping(bytes32 => Order) orders; // Orders
 
     function setDeliveryAddress(string where) external {
         customerDeliveryAddresses[msg.sender] = where; // Set delivery address
     }
 
     function ship(uint id, address customer) external returns (bool handled) {
-        if (keccak256(abi.encodePacked(customerDeliveryAddresses[customer])) == keccak256(abi.encodePacked("")) || orders[id].shipped == true) { // Check delivery address set
+        bytes32 productID = keccak256(abi.encodePacked(customerDeliveryAddresses[customer], customer, id, true));
+
+        if (keccak256(abi.encodePacked(customerDeliveryAddresses[customer])) == keccak256(abi.encodePacked("")) || orders[productID].shipped == true) { // Check delivery address set
             return false; // Return failed
         }
 
-        orders[id] = Order(customerDeliveryAddresses[customer], customer, id, true); // Init shipped order
+        orders[productID] = Order(customerDeliveryAddresses[customer], customer, id, productID, true); // Init shipped order
         
         return true; // Return success
     }
