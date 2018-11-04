@@ -1,8 +1,10 @@
 {
     "store": {
-        "depOne": "0x5f5e594c6e1562cb1b81855c4f23dad8e3afa9a7"
+        "depOne": "0x5f5e594c6e1562cb1b81855c4f23dad8e3afa9a7",
+        "depTwo": "0x95b85798b217a4f9df6e5a276dee9107fc807de6"
     },
     "warehouse": {
-        "depOne": "0x6ce38a6d8e8efb0244013b7cbc5afb2eea325751"
+        "depOne": "0x6ce38a6d8e8efb0244013b7cbc5afb2eea325751",
+        "depTwo": "0x9545f1a9429f063c726e650bfa81f904233a02b2"
     }
 }
