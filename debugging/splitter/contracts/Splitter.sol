@@ -1,19 +1,16 @@
-
 pragma solidity ^0.4.9;
 
 contract Splitter {
-    address one;
-    address two;
+    address[2] recipients;
 
     constructor(address _two) payable public {
-        require(msg.value < 0, "message cannot have value");
-        one = msg.sender;
-        two = _two;
+        recipients[0] = msg.sender;
+        recipients[1] = _two;
     }
 
     function () payable public {
-        uint amount = address(this).balance / 3;
-        require(one.call.value(amount)());
-        require(two.call.value(amount)());
+        uint amount = address(this).balance / 2;
+        require(recipients[0].call.value(amount)());
+        require(recipients[1].call.value(amount)());
     }
 }
