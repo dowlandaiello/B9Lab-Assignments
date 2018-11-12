@@ -1,9 +1,0 @@
-{
-    "name": "B9lab-assignments",
-    "public": true,
-    "type": "npm",
-    "files": [
-        "RockPaperScissors/App/ethpaperscissors/dist",
-        "RockPaperScissors"
-    ]
-}
